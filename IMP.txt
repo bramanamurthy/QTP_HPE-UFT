@@ -1,0 +1,339 @@
+********************************************************Excel********************************************************
+1) Working with Regular Expression object
+Set objRegExp=New RegExp
+objRegExp.Pattern=".*Ramana"
+objRegExp.Global=True
+Set matches=objRegExp.Execute(outputvalue)
+
+2) Accessing Environment variables
+Environment.Value("OS")
+
+3)Reading data from Excel
+Set objExcel=CreateObject("Excel.Application")
+objExcel.Workbooks.Open "D:\ff.xls"
+objExcel.Application.Visible=True
+Set objSheet=objExcel.ActiveWorkbook.Worksheets("Sheet1")
+
+'To write into excel
+objSheet.Cells(1,1).Value="S.No"
+
+'To read from excel
+rowCount=objSheet.UsedRange.Rows.Count
+columnCount=objSheet.UsedRange.Columns.Count
+
+For i=1 to rowCount
+	For j=1 to columnCount
+		MsgBox objSheet.Cells(i,j).Value
+	Next
+Next
+
+'to save the active execel
+objExcel.ActiveWorkbook.Save
+
+'to close the active execel
+objExcel.ActiveWorkbook.Close
+
+'To Quit the excel
+objExcel.Application.Quit
+
+Set objSheet=Nothing
+Set objExcel=Nothing
+
+4) Comparing 2 excel
+Set objExcel=CreateObject("Excel.Application")
+objExcel.Application.Visible=True
+Set workbook1=objExcel.Open("first excel file path")
+Set workbook2=objExcel.Open("Second excel file path")
+
+Set Worksheet1=workbook1.WorkSheets("Sheet1")
+Set Worksheet2=workbook2.WorkSheets("Sheet1")
+
+
+'Comparing 2 sheets cell by cell
+For each cell in Worksheet1.UsedRange
+	If (cell.Value<>Worksheet2.Range("Cell.Address").Value) Then
+		cell.Interior.ColorIndex=3
+	End If
+
+Next
+
+'for searching the data
+For each search_data in Worksheet1.UsedRange
+	If search_data="Ram" Then
+	 MsgBox "Search data Found!!"
+	End If
+Next
+
+'Copy  the used range of
+Worksheet1.UsedRange.Copy
+Worksheet2.Range("A1").PasteSpecial Paste =xlValues
+********************************************************Excel********************************************************
+********************************************************VB Script****************************************************
+5) Mid(String,Start,length)
+Example: 
+Str="Welcome to the World of QTP"
+
+print  Mid(Str,9,12)                                            
+'Output --> to the World
+
+Print Mid("Good Morning",6,7)                        
+'Output --> Morning
+
+Print Mid("Good Morning",6)                        
+'Output --> Morning
+
+6) Replace(Expression,find,replacewith,_start,_count,_compare)
+_count=-1 means to make all possible substitutions
+
+7) Split(Expression,delimeter,_count,_compare)
+
+'Space as Delimiter
+Str="Welcome to the World of QTP"
+
+'Split
+SArray=Split(Str," ",-1)
+For  i= 0 to UBound(SArray)
+    Print  SArray(i)
+Next
+'Comma As Delimitter
+
+Str="Welcome,to,the,World,of,QTP"
+'Split
+SArray=Split(Str,",",-1)
+
+For  i= 0 to UBound(SArray)
+    Print  SArray(i)
+Next
+
+8) StrCompare(String1,String2,_Compare)
+Str1 = "QTP"
+Str2 = "qtp"                                   
+
+Print StrComp(Str1, Str2, 1)                           
+'Output--> Returns 0 , which means Str1 is equal to Str2 for  textual comparison
+
+Print StrComp(Str1, Str2, 0)                           
+'Output--> Returns -1 , which means Str2 is  greater than  Str1 for  Binary comparison
+
+9) InStr(1,Str1,Str2,vbTextCompare)
+
+Example: 
+Str="How do you DO ?"
+
+Print Instr(1, Str, "DO", 1)                
+'Output--> 5 , which means  it found the string in 5th position for  textual comparison
+
+Print Instr(1, Str, "DO", 0)                
+'Output--> 12 , which means  it found the string in 12th position for binary comparison
+
+Print Instr(6, Str, "do", 0)                    
+'Output--> 0 , which means  it  didnot found the string after the 6th position  
+ for binary comparison
+
+10) InStrRev(Str1,Str2,1,vbTextCompare)
+
+Example: 
+Str="How do you DO ?"
+
+Print InStrRev(Str,"DO",-1,1)                
+'Output--> 12 , which means  it found the string in 12th position for  textual comparison
+
+Print InStrRev(Str,"do",-1,0)            
+'Output--> 5 , which means  it found the string in 5th position for binary comparison
+
+Print InStrRev(Str,"DO",13,0)            
+'Output--> 12 , which means  it found the string in  12th position for binary comparison
+
+Print InStrRev(Str,"DO",10,1)            
+'Output--> 5 , which means  it found the string in 5th position for  textual comparison 
+
+11) DateAdd 'Returns a date to which a specified time interval has been added
+DateAdd(interval,number,Date)
+Print  DateAdd("yyyy",1,"November 01, 2010")                
+'Output-->11/1/2011
+
+12) DateDiff 'Returns the number of intervals between two dates
+DateDiff(interval,Date1,Date2)
+'DateDiff Print DateDiff("yyyy","November 01, 2008","November 01, 2009")\
+'Output-->	1
+
+13) DatePart ' Returns the specified part of a given date.
+Print DatePart("yyyy","November 01, 2008")          
+'Output-->    2008
+
+14) Day 'Returns a whole number between 1 and 31, inclusive, representing the day of the month.
+Print  Day("11-01-2010")                                        
+'Output -->1
+
+15) Month 'Returns a whole number between 1 and 12, inclusive, representing the month of the year.
+Print  Month("11-01-2010")                                        
+'Output -->11
+
+16) MonthName 'Returns a string indicating the specified month.
+Print MonthName(11,true)                                                  
+'Output -->Nov
+
+17) Weekday ' Returns a whole number representing the day of the week. 
+Print  Weekday("November 03, 2010")                                  
+'Output -->4  (which means its a Wednesday)
+
+18) WeekdayName 'Returns a string indicating the specified day of the week.
+Print  WeekdayName(4)                                  
+'Output -->Wednesday
+
+19) TimeSerial  'Returns a Variant of subtype Date containing the time for a specific hour, minute, and second.
+Print  Timeserial(13,30,00)                    
+'Output -->1:30:00 PM
+
+20) Do Loop
+Repeats a block of statements while a condition is True or until a condition becomes True.
+
+   Example-1:
+    Counter = 1
+    Do While Counter < 4
+                        Total =Inputbox("Please enter the total marks in numbers")                        
+                                    If   Total < 50 Then                                    
+                                                MsgBox  "Fail"                                   
+                                    ElseIf  Total >=50 and Total <=60   then                                    
+                                                Msgbox "Second Class"                        
+                                    ElseIf  Total >60 and Total <80   then                                    
+                                                Msgbox "First Class"                       
+                                    ElseIf  Total >=80  then                                    
+                                                Msgbox "Distinction"                        
+                                    Else                        
+                                                Msgbox "Invalid Marks"                                    
+                                    End If
+        Counter = Counter + 1
+     Loop
+
+
+   Example-2:
+     Counter = 1
+     Do 
+                        Total =Inputbox("Please enter the total marks in numbers")                        
+                                    If   Total < 50 Then                                    
+                                                MsgBox  "Fail"                                    
+                                    ElseIf  Total >=50 and Total <=60   then                                    
+                                                Msgbox "Second Class"                        
+                                    ElseIf  Total >60 and Total <80   then                                    
+                                                Msgbox "First Class"                        
+                                    ElseIf  Total >=80  then                                    
+                                                Msgbox "Distinction"                        
+                                    Else                        
+                                                Msgbox "Invalid Marks"                                    
+                                    End If
+      Counter = Counter + 1
+      Loop until Counter > 4
+   
+   Example-3: 'Exit Do While loop
+      Do While Counter < 10
+	Counter=counter + 1
+	If  counter = 6 Then
+	    Exit Do
+	End If
+	Print Counter
+      Loop
+
+   Example-4: 'Exit Do Until loop
+      Do    
+	Counter=Counter + 1
+	 If  Counter = 6 Then
+	   Exit Do
+         End If
+        Print Counter    
+      Loop Until counter >11
+
+21) For Next
+For...Next: Repeats a group of statements a specified number of times.
+
+22) Select Case ' Executes one of several groups of statements, depending on the value of an expression. Select Case
+	  Colour =Ucase( Inputbox("Please enter the colour of your choice"))
+          Select Case Colour        
+                                    Case   "RED"        
+                                                            MsgBox  "Colour selected is Red"        
+                                    Case   "BLUE"        
+                                                            MsgBox  "Colour selected is Red"        
+                                    Case   "GREEN"        
+                                                            MsgBox  "Colour selected is Red"        
+                                    Case   ELSE        
+                                                            MsgBox  "Invalid Colour"
+
+          End Select
+
+22) While Wend : Executes a series of statements as long as a given condition is True.
+    Counter =1
+    While Counter < 4
+	    Total =Inputbox("Please enter the total marks in numbers")
+                                        If   Total < 50 Then                                        
+                                                    MsgBox  "Fail"                                        
+                                        ElseIf  Total >=50 and Total <=60   then                                        
+                                                    Msgbox "Second Class"                            
+                                        ElseIf  Total >60 and Total <80   then                                        
+                                                    Msgbox "First Class"                            
+                                        ElseIf  Total >=80  then                                        
+                                                    Msgbox "Distinction"                            
+                                        Else                            
+                                                    Msgbox "Invalid Marks"                                        
+                                        End If    
+     Counter=counter + 1    
+    Wend
+********************************************************VB Script****************************************************
+
+********************************************Working with Files using FSO*********************************************
+23) FileSystemObject 'Filesystemoboect is an object model which is used to handle the drives, folders, and files of a system or server.
+Dim objFSO
+Set objFSO=CreateObject("Scripting.FileSystemObject")
+
+a) Create Text File
+Set objFile=objFSO.CreateTextFile("Full file Path",True-OverWritten Or False-Not OverWritten as optional),True-UniCode Or False-ASCII as optional))
+
+Example:
+Set objFile=objFSO.CreateTextFile("C:\qtptest.txt",True,True)
+
+objFile.Close
+Set objFile=Nothing
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
